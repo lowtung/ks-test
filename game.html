@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- <script src="script.js" async></script> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+  <link href="Assets/Images/icon.png" rel="icon">
+
+  <title>Kate Spade Memory Game</title>
+</head>
+
+<style>
+  @font-face {
+    font-family: "AustinBold";
+    src: url("Assets/Fonts/Austin\ Roman.otf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Futura";
+    src: url("Assets/Fonts/Futura.ttf");
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  h1 {
+    font-family: "AustinBold";
+  }
+
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  html {
+    min-height: 80vh;
+    font-family: "AustinBold";
+  }
+
+  body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 50vh;
+    width: 100%;
+    background-repeat: repeat;
+    background-size: cover;
+    /* background: #EFBDCA; */
+    background-image: url("Assets/Images/bgd.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+  .game-info-container {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .game-info {
+    color: #010101;
+    font-size: 1em;
+    font-family: "AustinBold";
+  }
+
+  .game-container {
+    margin: 10px auto;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-gap: 10px;
+    justify-content: center;
+    perspective: 500px;
+    font-family: "AustinBold";
+  }
+
+  .card {
+    position: relative;
+    height: 105px;
+    width: 75px;
+  }
+
+  .card-face {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 150ms ease-in-out;
+    -webkit-transition: -webkit-transform 150ms ease-in-out;
+    -moz-transition: transform 150ms ease-in-out;
+    -ms-transition: transform 150ms ease-in-out;
+    -o-transition: transform 150ms ease-in-out;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .card.visible .card-back {
+    transform: rotateY(-180deg);
+    -webkit-transform: rotateY(-180deg);
+    -moz-transform: rotateY(-180deg);
+    -ms-transform: rotateY(-180deg);
+    -o-transform: rotateY(-180deg);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+  }
+
+  .card.visible .card-front {
+    transform: rotateY(0);
+    -webkit-transform: rotateY(0);
+    -moz-transform: rotateY(0);
+    -ms-transform: rotateY(0);
+    -o-transform: rotateY(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  /* .card.matched .card-front .card-value {
+  animation: dance 1s linear infinite 500ms;
+} */
+
+  /* .card-back {
+    background-color: #EFBDCA;
+    height: 105px;
+    width: 75px;
+    transform: rotateY(0);
+  } */
+
+  .ks-card {
+    position: absolute;
+    /* transition: width 100ms ease-in-out, height 100ms ease-in-out; */
+    height: 105px;
+    width: 75px;
+  }
+
+
+  .card-value {
+    position: relative;
+    /* transition: transform 100ms ease-in-out;
+    transform: scale(.9); */
+    height: 105px;
+    width: 75px;
+  }
+
+  /* .card-front:hover .card-value {
+    transform: scale(1);
+  } */
+
+  .card-front {
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    -o-transform: rotateY(-80deg);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .overlay-text {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: none;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #ffffff;
+    font-family: "AustinBold";
+    text-shadow: 2px 2px 4px #000000;
+  }
+
+  .overlay-text-small {
+    font-size: 2rem;
+  }
+
+  .overlay-text.visible {
+    display: flex;
+    /* animation: overlay-grow 0ms forwards; */
+  }
+
+  #TimeProgress {
+    width: 100%;
+
+  }
+
+  #TimeBar {
+    width: 10%;
+    height: 30px;
+    background-color: #010101a6;
+    text-align: center;
+    line-height: 30px;
+    font-size: 1em;
+    color: white;
+    font-family: "AustinBold";
+  }
+
+  @media (max-width: 600px) {
+    .game-container {
+      grid-template-columns: repeat(4, auto)
+    }
+
+    .game-info-container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @media (max-width: 360px){
+    body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 50vh;
+    width: 100%;
+    background: #ffffff;
+    background-size: cover;
+   
+  }
+  .card {
+    position: relative;
+    height: 70px;
+    width: 50px;
+  }
+  .ks-card {
+    position: absolute;
+    /* transition: width 100ms ease-in-out, height 100ms ease-in-out; */
+    height: 70px;
+    width: 50px;
+  }
+
+  .card-value {
+    position: relative;
+    /* transition: transform 100ms ease-in-out;
+    transform: scale(.9); */
+    height: 70px;
+    width: 50px;
+  }
+
+    }
+  }
+  
+</style>
+
+<body>
+  <div>
+    <img style="height: 80px; width: 115px; margin-top: 15px;" class="center" src="Assets/Images/logo.png">
+  </div>
+  <div style="font-size: 2px;" class="overlay-text visible" onclick="move()">
+    <!-- Click to Start -->
+  </div>
+  <div id="game-over-text" class="overlay-text" onclick="move()">
+    GAME OVER
+    <span class="overlay-text-small">Click to Restart</span>
+  </div>
+  <div id="victory-text" class="overlay-text">
+    <!-- VICTORY -->
+    <span class="overlay-text-small"></span>
+  </div>
+
+  <div class="game-container">
+    <div class="game-info-container" style="display: inline-block">
+
+      <div class="game-info">
+        Moves: <span id="flips">0</span>
+      </div>
+      <div class="TimeProgress"> Time:
+        <div id="TimeBar"><span id="time-remaining">30</span></div>
+        
+      </div>
+
+    </div>
+
+    <div class="card">
+      <div class="card-back card-face">
+        <img class="ks-card" src="Assets/Images/card-bgd.png">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="Assets/Images/card-12.png">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-back card-face">
+        <img class="ks-card" src="Assets/Images/card-bgd.png">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="Assets/Images/card-12.png">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-back card-face">
+        <img class="ks-card" src="Assets/Images/card-bgd.png">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="Assets/Images/card-13.png">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-back card-face">
+        <img class="ks-card" src="Assets/Images/card-bgd.png">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="Assets/Images/card-13.png">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-back card-face">
+        <img class="ks-card" src="Assets/Images/card-bgd.png">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="Assets/Images/card-14.png">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-back card-face">
+        <img class="ks-card" src="Assets/Images/card-bgd.png">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="Assets/Images/card-14.png">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-back card-face">
+        <img class="ks-card" src="Assets/Images/card-bgd.png">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="Assets/Images/card-15.png">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-back card-face">
+        <img class="ks-card" src="Assets/Images/card-bgd.png">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="Assets/Images/card-15.png">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-back card-face">
+        <img class="ks-card" src="Assets/Images/card-bgd.png">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="Assets/Images/card-16.png">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-back card-face">
+        <img class="ks-card" src="Assets/Images/card-bgd.png">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="Assets/Images/card-16.png">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-back card-face">
+        <img class="ks-card" src="Assets/Images/card-bgd.png">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="Assets/Images/card-17.png">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-back card-face">
+        <img class="ks-card" src="Assets/Images/card-bgd.png">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="Assets/Images/card-17.png">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-back card-face">
+        <img class="ks-card" src="Assets/Images/card-bgd.png">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="Assets/Images/card-18.png">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-back card-face">
+        <img class="ks-card" src="Assets/Images/card-bgd.png">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="Assets/Images/card-18.png">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-back card-face">
+        <img class="ks-card" src="Assets/Images/card-bgd.png">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="Assets/Images/card-19.png">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-back card-face">
+        <img class="ks-card" src="Assets/Images/card-bgd.png">
+      </div>
+      <div class="card-front card-face">
+        <img class="card-value" src="Assets/Images/card-19.png">
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+
+    class AudioController {
+      constructor() {
+        this.bgMusic = new Audio('Assets/Audio/bgm.mp3');
+        this.flipSound = new Audio('Assets/Audio/flip.mp3');
+        this.matchSound = new Audio('Assets/Audio/match.wav');
+        this.bgMusic.volume = 0.5;
+        this.bgMusic.loop = true;
+      }
+      startMusic() {
+        this.bgMusic.play();
+      }
+      stopMusic() {
+        this.bgMusic.pause();
+        this.bgMusic.currentTime = 0;
+      }
+      flip() {
+        this.flipSound.play();
+      }
+      match() {
+        this.matchSound.play();
+      }
+      victory() {
+        this.stopMusic();
+        // this.victorySound.play();
+      }
+      gameOver() {
+        this.stopMusic();
+        // this.gameOverSound.play();
+      }
+
+    }
+
+    class KS {
+      constructor(totalTime, cards) {
+        this.cardsArray = cards;
+        this.totalTime = totalTime;
+        this.timeRemaining = totalTime;
+        this.timer = document.getElementById('time-remaining')
+        this.ticker = document.getElementById('flips');
+        this.audioController = new AudioController();
+      }
+
+      startGame() {
+        this.totalClicks = 0;
+        this.timeRemaining = this.totalTime;
+        this.cardToCheck = null;
+        this.matchedCards = [];
+        this.busy = true;
+        setTimeout(() => {
+          this.audioController.startMusic();
+          this.shuffleCards(this.cardsArray);
+          this.countdown = this.startCountdown();
+          this.busy = false;
+        }, 500)
+        this.hideCards();
+        this.timer.innerText = this.timeRemaining;
+        this.ticker.innerText = this.totalClicks;
+      }
+      startCountdown() {
+        return setInterval(() => {
+          this.timeRemaining--;
+          this.timer.innerText = this.timeRemaining;
+          if (this.timeRemaining === 0)
+            this.gameOver();
+        }, 1000);
+      }
+      gameOver() {
+        clearInterval(this.countdown);
+        document.getElementById('game-over-text').classList.add('visible');
+      }
+      victory() {
+        clearInterval(this.countdown);
+        // document.getElementById('victory-text').classList.add('visible');
+        location.replace("win.html")
+      }
+      hideCards() {
+        this.cardsArray.forEach(card => {
+          card.classList.remove('visible');
+          card.classList.remove('matched');
+        });
+      }
+      flipCard(card) {
+        if (this.canFlipCard(card)) {
+          this.audioController.flip();
+          this.totalClicks++;
+          this.ticker.innerText = this.totalClicks;
+          card.classList.add('visible');
+
+          if (this.cardToCheck) {
+            this.checkForCardMatch(card);
+          } else {
+            this.cardToCheck = card;
+          }
+        }
+      }
+      checkForCardMatch(card) {
+        if (this.getCardType(card) === this.getCardType(this.cardToCheck))
+          this.cardMatch(card, this.cardToCheck);
+        else
+          this.cardMismatch(card, this.cardToCheck);
+
+        this.cardToCheck = null;
+      }
+      cardMatch(card1, card2) {
+        this.matchedCards.push(card1);
+        this.matchedCards.push(card2);
+        card1.classList.add('matched');
+        card2.classList.add('matched');
+        this.audioController.match();
+        if (this.matchedCards.length === this.cardsArray.length)
+          this.victory();
+      }
+      cardMismatch(card1, card2) {
+        this.busy = true;
+        setTimeout(() => {
+          card1.classList.remove('visible');
+          card2.classList.remove('visible');
+          this.busy = false;
+        }, 1000);
+      }
+      shuffleCards(cardsArray) { // Fisher-Yates Shuffle Algorithm.
+        for (let i = cardsArray.length - 1; i > 0; i--) {
+          let randIndex = Math.floor(Math.random() * (i + 1));
+          cardsArray[randIndex].style.order = i;
+          cardsArray[i].style.order = randIndex;
+        }
+      }
+      getCardType(card) {
+        return card.getElementsByClassName('card-value')[0].src;
+      }
+      canFlipCard(card) {
+        return !this.busy && !this.matchedCards.includes(card) && card !== this.cardToCheck;
+      }
+    }
+
+    if (document.readyState == 'loading') {
+      document.addEventListener('DOMContentLoaded', ready);
+    } else {
+      ready();
+    }
+
+    function ready() {
+      let overlays = Array.from(document.getElementsByClassName('overlay-text'));
+      let cards = Array.from(document.getElementsByClassName('card'));
+      let game = new KS(30, cards);
+
+      overlays.forEach(overlay => {
+        overlay.addEventListener('click', () => {
+          overlay.classList.remove('visible');
+          game.startGame();
+        });
+      });
+
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          game.flipCard(card);
+        });
+      });
+    }
+
+
+  </script>
+
+  <script>
+    var i = 0;
+    function move() {
+      if (i == 0) {
+        i = 1;
+        var elem = document.getElementById("TimeBar");
+        var width = 10;
+        var id = setInterval(frame, 320);
+        function frame() {
+          if (width >= 100) {
+            clearInterval(id);
+            i = 0;
+          } else {
+            width++;
+            elem.style.width = width + "%";
+          }
+        }
+      }
+    }
+  </script>
+
+
+
+</body>
+
+</html>

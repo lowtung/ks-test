@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <link href="Assets/Images/icon.png" rel="icon">
+
+    <title>Kate Spade Memory Game</title>
+
+</head>
+
+<style>
+ @font-face {
+    font-family: "AustinBold";
+    src: url("Assets/Fonts/Austin\ Roman.otf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "AustinLight";
+    src: url("Assets/Fonts/Austin\ Light.otf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Futura";
+    src: url("Assets/Fonts/Futura.ttf");
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  h1 {
+    font-family: "AustinBold";
+  }
+
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  html {
+    min-height: 80vh;
+    font-family: "AustinBold";
+  }
+
+  body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 50vh;
+    width: 100%;
+    background-repeat: repeat;
+    background-size: cover;
+    /* background: #EFBDCA; */
+    background-image: url("Assets/Images/bgd.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+  .btn {
+    margin: auto;
+    background-color: #EFBDCA;
+    height: 50%;
+    width: 50%;
+    padding-top: 12px;
+    border-radius: 0%;
+    font-size: 4vw;
+    font-family: Futura;
+    letter-spacing: 3px;
+    color: 010101;
+    text-decoration: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.10);
+    display: block;
+    bottom: 0;
+  }
+
+  #footer {
+    background-color: transparent;
+    flex: 0 0 50px;
+    margin-top: 75px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+  }
+</style>
+
+<body>
+    <div>
+      <img style="height: 50%; width: 50%; margin-top: 15px;" class="center" src="Assets/Images/logo.png">
+    </div>
+    <h1
+        style="margin-top: 0px; font-size: 7vw; text-decoration: none; font-family: AustinBold; text-align: center;">
+        HOW TO PLAY</h1>
+    <div>
+        <p style="margin-bottom: 5px; margin: 0; line-height: 1.3; font-size: 5vw; text-decoration: none; font-family: AustinLight; text-align: center;">
+          match all of our latest<br>spring bags in thirty seconds<br>to claim your prize!
+        </p>
+     </div>
+    <div>
+        <img style="height: 50%; width: 50%; margin-top: 0px; margin-bottom: 0px;" class="center"
+            src="Assets/Images/instruction.png">
+    </div>
+    <div>
+        <p style="margin-top: 5px;  line-height: 1.3; font-size: 5vw; text-decoration: none; font-family: AustinLight; text-align: center;">
+            click 'play' to start<br>the game.
+        </p>
+    </div>
+
+    <div style="margin-top: 5%;">
+        <a href="game.html" class="btn">PLAY</a>
+    </div>
+
+</body>
+
+</html>

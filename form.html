@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+  <link href="Assets/Images/icon.png" rel="icon">
+
+  <title>Kate Spade Memory Game</title>
+
+</head>
+
+<style>
+ @font-face {
+    font-family: "AustinBold";
+    src: url("Assets/Fonts/Austin\ Roman.otf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "AustinLight";
+    src: url("Assets/Fonts/Austin\ Light.otf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Futura";
+    src: url("Assets/Fonts/Futura.ttf");
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  h1 {
+    font-family: "AustinBold";
+  }
+
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  html {
+    min-height: 80vh;
+    font-family: "AustinBold";
+  }
+
+  body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 50vh;
+    width: 100%;
+    background-repeat: repeat;
+    background-size: cover;
+    /* background: #EFBDCA; */
+    background-image: url("Assets/Images/bgd.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+  .btn {
+    margin: auto;
+    background-color: #EFBDCA;
+    height: 50%;
+    width: 50%;
+    padding-top: 12px;
+    border-radius: 0%;
+    font-size: 4vw;
+    font-family: Futura;
+    letter-spacing: 3px;
+    color: 010101;
+    text-decoration: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.10);
+    margin: auto;
+    display: block;
+    bottom: 0;
+  }
+
+  #footer {
+    background-color: transparent;
+    flex: 0 0 50px;
+    margin-top: 75px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+  }
+
+  .form {
+    height: 10%;
+    width: 80%;
+    background-color: white;
+    border-style: solid;
+    border-color: #EFBDCA;
+    /* border: none; */
+    padding: 2% 3rem;
+    font-size: 4vw;
+    font-family: "Futura";
+    text-align: center;
+    margin: auto;
+    display: block;
+    
+  }
+ 
+</style>
+
+<body>
+  <div class="rect">
+    <div>
+      <img style="height: 50%; width: 50%; margin-top: 15px;" class="center" src="Assets/Images/logo.png">
+    </div>
+    <p
+      style="margin-top: 50px;  line-height: 1.3; font-size: 5vw; text-decoration: none; font-family: AustinLight; text-align: center;">
+      please enter your name and <br>email address to start.</p>
+
+    <form class="center" action="https://us-central1-templates-33312.cloudfunctions.net/sendMail">
+      <div class="form-group">
+        <input type="text" class="form" id="name" placeholder="Name" name="name"
+          style="margin-bottom: -10px; text-align: center;" required>
+      </div>
+
+      <div class="form-group">
+        <input type="email" class="form" id="email" placeholder="Email Address " name="email"
+          style="margin-bottom: 5px; text-align: center;" required>
+      </div>
+
+      <div>
+        <p style="font-family: AustinLight; font-size: 3.5vw; color: #010101; text-align: center;">
+          By clicking 'ENTER', I have agreed <br> to the
+          <a target="_blank" onclick="TnC()"
+            style="font-family: AustinLight; text-decoration: underline; font-size: 3.5vw; padding:0px  underline; color: #010101">
+            Privacy policy.</a>
+        </p>
+      </div>
+
+      <div style="margin-top: 80px;">
+        <a href="thankyou.html" class="btn">ENTER</a>
+      </div>
+
+      <div style="margin-top: 10px; margin-bottom: 10px; color: #010101; text-align: center;">
+        <a href="index.html"
+          style="margin-top: 10px; font-family: AustinLight; font-size: 3.5vw; color:#010101; text-decoration: underline ; ">
+          Thanks, I am not interested.</a>
+      </div>
+
+      <div id="footer" style="text-align: center; width: 100%; padding-bottom: 20px;">
+        <p style="font-family: AustinLight; font-size: 3vw; margin-bottom: 5px; color: #010101; bottom:0%">
+          © 2021 by kate spade |
+           Powered by <a href="https://www.conten.tech/" style="text-decoration: underline; color:#010101">Conten.T</a>
+        </p>
+      </div>
+  </div>
+
+  <script>
+    function TnC() {
+      alert(
+        "Receive marketing and promotion communications from brands owner and Conten.T via email. Allow us to process your personal data (for which we may have to share, disclose and/or transfer your data to brand owners’ affiliated companies and/or third party back end service providers within or outside your country) for the purpose of enhancing your customer experience."
+      );
+    }
+  </script>
+
+  <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+
+
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyDv0to0Pj-4CqcDkFXYCbQXHYFRAhvmpEY",
+      authDomain: "stproject-76c47.firebaseapp.com",
+      projectId: "stproject-76c47",
+      storageBucket: "stproject-76c47.appspot.com",
+      messagingSenderId: "787529726124",
+      appId: "1:787529726124:web:06f3a8ebae1ebc5544c709",
+      measurementId: "G-XX9H5FMYZB"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+
+
+</body>
+
+</html>
